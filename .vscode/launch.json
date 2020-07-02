@@ -7,7 +7,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "启动一个独立的 Chrome",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
         }

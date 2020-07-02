@@ -20,14 +20,21 @@ export default function PlatformManager()
 //============================================================
 //    PlatformManager # loadBytes()
 //============================================================
+var requestCache = {};
 PlatformManager.prototype.loadBytes       = function(path/*String*/, callback)
 {
+    // Cache 相同的请求，减少请求数量
+	if (requestCache[path] !== undefined) {
+        callback(requestCache[path]);
+    	return;
+    }
     var request = new XMLHttpRequest();
     request.open("GET", path, true);
     request.responseType = "arraybuffer";
     request.onload = function(){
         switch(request.status){
         case 200:
+            requestCache[path] = request.response;
             callback(request.response);
             break;
         default:
