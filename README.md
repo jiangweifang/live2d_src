@@ -13,3 +13,6 @@
 - 运行命令：`webpack --config webpack.config.js`
 
 - webpack视频教学：https://www.bilibili.com/video/av31582899/
+
+- 如果提示：无法加载文件 \npm\webpack.ps1，因为在此系统上禁止运行脚本。有关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。
+- 解决方法：使用管理员权限运行PowerShell 执行：`set-ExecutionPolicy RemoteSigned`
