@@ -21,5 +21,5 @@ module.exports = {
     open:true,
     hot:true,
   },
-  mode:'development'
+  mode:'production'
 };
