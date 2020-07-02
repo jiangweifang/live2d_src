@@ -10,6 +10,6 @@
 - Win系统：在PowerShell（非管理员）输入`npm install webpack -g` 和 `npm install webpack-cli -g` 全局安装webpack工具。
 非全局安装将参数`-g`替换为`--save-dev`。
 
-- 运行命令：`webpack --config config/webpack.config.js`
+- 运行命令：`webpack --config webpack.config.js`
 
 - webpack视频教学：https://www.bilibili.com/video/av31582899/
