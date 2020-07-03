@@ -1,12 +1,18 @@
 const path = require('path');
 module.exports = {
-  entry: path.join(__dirname, 'src', 'waifu-tips'),
+  entry: [
+    path.join(__dirname, 'src', 'Live2D'),
+    path.join(__dirname, 'src', 'Live2Dv3'),
+  ],
   watch: true,
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: '/dist/',
     filename: "live2d.js",
     chunkFilename: '[name].js'
+  },
+  node:{
+    fs:'empty'
   },
   performance: {
     hints:'warning',
@@ -28,7 +34,6 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 8080,
-    open:true,
     hot:true,
   },
   mode:'production'

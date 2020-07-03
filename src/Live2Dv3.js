@@ -1,7 +1,13 @@
-import "./lib/Live2Dv3Framework"
+import "./lib/Live2Dv3Framework";
+import "./lib/Live2Dv3Pixi";
+import "./Live2Dv3Model";
 
-//程序入口
-  class Live2dV3 { // eslint-disable-line no-unused-vars
+
+window.loadlive2Dv3 = function (basePath) {
+    return new Viewer(basePath)
+}
+
+class Viewer { // eslint-disable-line no-unused-vars
     constructor ({ basePath, modelName, width = 500, height = 300, el, sizeLimit, mobileLimit, sounds }) {
       if (typeof Live2DCubismCore === 'undefined') {
         console.error('live2dv3 failed to load:\nMissing live2dcubismcore.js\nPlease add "https://cdn.jsdelivr.net/gh/HCLonely/Live2dV3/js/live2dcubismcore.min.js" to the "<script>" tag.\nLook at https://github.com/HCLonely/Live2dV3')
@@ -35,17 +41,17 @@ import "./lib/Live2Dv3Framework"
 
       window.console.log('Live2dV3: loading model "' + modelName + '"')
 
-      this.l2d = new L2D(basePath)
+      this.l2dMod = new Live2DModel(basePath)
 
-      this.canvas = el
+      //this.canvas = el
 
       if (modelName) {
         this.modelName = modelName
-        this.l2d.load(modelName, this)
+        this.l2dMod.load(modelName, this)
       }
 
       this.app = new PIXI.Application(width, height, { transparent: true })
-      this.canvas.appendChild(this.app.view)
+      el = this.app.view;
 
       this.app.ticker.add((deltaTime) => {
         if (!this.model) {
@@ -255,12 +261,109 @@ import "./lib/Live2Dv3Framework"
     }
 
     loadModel (modelName) {
-      this.l2d.load(modelName || this.modelName, this)
+      this.l2dMod.load(modelName || this.modelName, this)
     }
   }
-  const VERSION = '1.2.2'
-  window.console.log('Live2dV3 ' + VERSION);
 
-  window.l2dViewer = function (options) {
-    return new Live2dV3(options)
-  }
+function onChangeLog(){
+    $(document.body).append($("<div></div>")
+        .attr("id","darken")
+        .addClass("darken")
+        .css("top", window.pageYOffset + "px")
+        .click(function(){
+            $('#selector').remove();
+            $('#darken').remove();
+            $(document.body).css("overflow", "auto");
+        }))
+    .append($("<div></div>")
+        .attr("id","selector")
+        .addClass("selector")
+        .css("top", (window.pageYOffset + (window.innerHeight * 0.05)) + "px")
+        .css("padding", "2%"))
+    .css("overflow", "hidden");
+    $("#selector").append($("<table></table>")
+        .addClass("wikitable")
+        .append($("<tr></tr>")
+            .append($("<td></td>")
+                .css("background-color", "#24252D")
+                .css("height", "30px")
+                .css("padding-left", "8px")
+                .html("<b>Changelog</b>")
+            )
+        )
+        .append($("<tr></tr>")
+            .append($("<td></td>")
+                .attr("id", "chglog")
+                .css("padding", "15px")
+                .css("vertical-align","text-top")
+            )
+        )
+    )
+
+    var cb = function (response){
+        for (i in response){
+            var message = response[i].commit.message;
+            var date = response[i].commit.committer.date;
+            date = date.replace("T", " ");
+            date = date.replace("Z", " UTC");
+
+            $("#chglog").append($("<p></p>")
+                .css("line-height", "0.8")
+                .html(message+"<br>")
+                .append($("<font></font>")
+                    .css("font-size", "10px")
+                    .css("color", "gray")
+                    .html(date)
+                )
+            );
+        }
+    }
+
+    var xobj = new XMLHttpRequest();
+    xobj.open("GET", "https://api.github.com/repos/alg-wiki/AzurLaneL2DViewer/commits?sha=gh-pages", true);
+    xobj.setRequestHeader("Authorization", "token c44bb04d2275b3c1849b49f02d8c1b473c5b6864");
+    //access token scope: <<no scope>>
+    //Grants read-only access to public information (includes public user profile info, public repository info, and gists)
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            cb(JSON.parse(xobj.response));
+          }
+    };
+    xobj.send(null); 
+}
+
+function onSelectBG(){
+    console.log(window.pageXOffset + " : " + window.pageYOffset);
+    var div = document.createElement('div');
+    div.className = "darken";
+    div.id = "darken";
+    div.style.top = window.pageYOffset + "px";
+    div.addEventListener("click", function(e) {
+            document.body.removeChild(document.getElementById("selector"));
+            document.body.removeChild(document.getElementById("darken"));
+            document.body.style.overflow = "auto";
+        }, false);
+    document.body.appendChild(div);
+    document.body.style.overflow = "hidden";
+    var selector = document.createElement('div');
+    selector.id = "selector";
+    selector.className = "selector";
+    selector.style.top = (window.pageYOffset + (window.innerHeight * 0.05)) + "px" ;
+    document.body.appendChild(selector);
+    for (var i = 0; i < backgroundData.length; i++){
+        var img = document.createElement('div');
+        img.className = "thumbbutton";
+        img.style.backgroundImage = "url(../assets/bg/"+backgroundData[i]+")";
+        img.style.backgroundSize = "100%";
+        img.id = backgroundData[i];
+        img.addEventListener("click", function(e) {
+            document.getElementById("L2dCanvas").style.backgroundImage = "url(../assets/bg/"+this.id+")";
+            document.body.removeChild(document.getElementById("selector"));
+            document.body.removeChild(document.getElementById("darken"));
+            document.body.style.overflow = "auto";
+        }, false);
+        document.getElementById("selector").appendChild(img);
+    }
+}
+

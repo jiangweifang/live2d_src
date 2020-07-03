@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pixi.js@4.6.1/dist/pixi.min.js"></script>
-<script type="text/javascript" src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script type="text/javascript" src="src/lib/live2dcubismcore.js"></script>
 <script type="text/javascript" src="dist/live2d.js"></script>
+<script type="text/javascript" src="dist/waifu-tips.js"></script>
 </head>
 <body>
     <div class="waifu" id="app">
@@ -27,7 +28,7 @@
     <script type="text/javascript">
         //loadlive2d("live2d", "//live2d.fghrsh.net/api/get/?id=4-0", 0.5);
         var settings_Json = '{"modelAPI":"\/\/live2d.fghrsh.net\/api\/","hitokotoAPI":"lwl12.com","modelId":"1","modelTexturesId":"52","showToolMenu":true,"canCloseLive2d":true,"canSwitchModel":true,"canSwitchTextures":true,"canSwitchHitokoto":true,"canTakeScreenshot":true,"canTurnToHomePage":true,"canTurnToAboutPage":true,"modelStorage":true,"modelRandMode":"rand","modelTexturesRandMode":"switch","showHitokoto":true,"showF12Status":true,"showF12Message":true,"showF12OpenMsg":true,"showCopyMessage":true,"showWelcomeMessage":true,"waifuSize":{"width":"280","height":"240"},"waifuTipsSize":{"width":"250","height":"70"},"waifuFontSize":14,"waifuToolFont":14,"waifuToolLine":20,"waifuToolTop":0,"waifuMinWidth":760,"waifuEdgeSide":"right","waifuEdgeSize":0,"waifuDraggable":"axis-x","waifuDraggableRevert":true,"homePageUrl":"http:\/\/127.0.0.1","aboutPageUrl":"#","screenshotCaptureName":"live2d.png","waifuTipsColor":"rgba(236, 217, 188, 0.5)","waifuBorderColor":"rgba(224, 186, 140, 0.62)","waifuShadowColor":"rgba(191, 158, 118, 0.2)","waifuFontsColor":"#32373c","waifuHighlightColor":"#0099cc","waifuToolColor":"#5b6c7d","waifuToolHover":"#34495e"}';
-        initModel("waifu-tips.json",JSON.parse(settings_Json));
+        initModel("dist/waifu-tips.json",JSON.parse(settings_Json));
     </script>
 </body>
 </html>

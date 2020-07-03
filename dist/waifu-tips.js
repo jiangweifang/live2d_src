@@ -1,6 +1,6 @@
-import "./Live2D";
-import live2d_v3 from "./Live2Dv3";
-
+//-------------------------------------------------
+// 应用层JS，不会被打包，便于修改，这个JS依赖于live2d.js加载成功后才可执行
+//-------------------------------------------------
 //全局变量
 window.live2d_settings = Array(); 
 var re = /x/;
@@ -135,14 +135,29 @@ window.initModel = function (waifuPath, settingsJson) {
     } loadModel(modelId, modelTexturesId);
 }
 
-function loadModel(modelId, modelTexturesId=0) {
+function loadModel(modelId, modelTexturesId=0,modelVer = 3) {
     if (live2d_settings.modelStorage) {
         localStorage.setItem('modelId', modelId);
         localStorage.setItem('modelTexturesId', modelTexturesId);
     } else {
         sessionStorage.setItem('modelId', modelId);
         sessionStorage.setItem('modelTexturesId', modelTexturesId);
-    } loadlive2d('live2d', live2d_settings.modelAPI+'get/?id='+modelId+'-'+modelTexturesId, (live2d_settings.showF12Status ? console.log('[Status]','live2d','模型',modelId+'-'+modelTexturesId,'加载完成'):null));
+    } 
+    if(modelVer<3){
+        loadlive2d('live2d', live2d_settings.modelAPI+'get/?id='+modelId+'-'+modelTexturesId, (live2d_settings.showF12Status ? console.log('[Status]','live2d','模型',modelId+'-'+modelTexturesId,'加载完成'):null));
+    }else{
+        loadlive2Dv3({
+            el: document.getElementById('live2d'),
+            basePath: 'https://cdn.jsdelivr.net/npm/live2dv3@latest/assets',
+            modelName: 'biaoqiang_3',
+            sizeLimit: false,
+            mobileLimit: false,
+            sounds: [
+                'sounds/demo.mp3',
+                'https://cdn.jsdelivr.net/npm/live2dv3@latest/assets/biaoqiang_3/sounds/demo.mp3'
+            ]
+        });
+    }
 }
 
 function loadTipsMessage(result) {
