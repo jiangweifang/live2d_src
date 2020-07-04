@@ -1,0 +1,16 @@
+{
+  "name": "trunk",
+  "version": "1.0.0",
+  "description": "基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版",
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "crypto-js": "^4.0.0",
+    "dtsmake": "0.0.10"
+  }
+}

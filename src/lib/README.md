@@ -1,0 +1,1 @@
+live2D.core.js 不被webpack调用

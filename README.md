@@ -1,9 +1,7 @@
 # live2d_src
-基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版  
+基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版
 
-合并[Live2Dv3](https://github.com/HCLonely/Live2dV3) 进入此webpack  
-
-
+我在理解[wzekin/live2d-widget.js](https://github.com/wzekin/live2d-widget.js) 的内容，代码内聚有点高，功能需要简化并更纯粹一些才可以使用
 
 记录编译方法：
 
