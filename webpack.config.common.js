@@ -1,34 +1,24 @@
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const visualizer = require('webpack-visualizer-plugin');
-const manifestPlugin = require('webpack-manifest-plugin');
 const nowDate = new Date();
 const isProd = e => e === 'prod';
 
 module.exports = env => {
   return {
-    node: {
-      fs: "empty"
-    },
+
     entry: [
-      'core-js/fn/promise',
-      './src/wpPublicPath.js',
       './src/index.js',
     ],
 
     output: {
-      filename: 'L2Dwidget.min.js',
-      // YOU MUST INSTALL babel-plugin-syntax-dynamic-import FIRST TO ENABLE CODE SPLITTING!
-      chunkFilename: 'L2Dwidget.[id].min.js',
-      library: 'L2Dwidget',
-      libraryExport: 'L2Dwidget',
-      libraryTarget: 'var',
+      filename: 'L2Dwidget.common.js',
+      libraryTarget: 'commonjs',
       path: path.resolve(__dirname, 'lib'),
       pathinfo: (isProd(env) ? false : true),
     },
 
-    target: 'web',
+    target: 'node',
 
     devtool: 'source-map',
 
@@ -54,20 +44,11 @@ module.exports = env => {
           },
         },
       }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1,
+      }),
       // Banner must be put below UglifyJsPlugin, or it won't work.
       new webpack.BannerPlugin(`${isProd(env) ? '' : '___DEV___'}https://github.com/xiazeyu/live2d-widget.js built@${nowDate.toLocaleDateString()} ${nowDate.toLocaleTimeString()}`),
-      /**
-       * Webpack Manifest Plugin
-       * https://github.com/danethurber/webpack-manifest-plugin
-       */
-
-      new manifestPlugin(),
-      /**
-       * Webpack Visualizer
-       * https://github.com/chrisbateman/webpack-visualizer
-       */
-
-      new visualizer(),
     ],
 
     resolve: {
