@@ -20,6 +20,8 @@ import * as LAppDefine from "./lappdefine";
 
 export let s_instance: LAppLive2DManager = null;
 
+let _jsonPath = '';
+
 /**
  * サンプルアプリケーションにおいてCubismModelを管理するクラス
  * モデル生成と破棄、タップイベントの処理、モデル切り替えを行う。
@@ -32,8 +34,11 @@ export class LAppLive2DManager {
    * @return クラスのインスタンス
    */
   public static getInstance(jsonPath): LAppLive2DManager {
+    if (_jsonPath == ''){
+      _jsonPath = jsonPath;
+    }
     if (s_instance == null) {
-      s_instance = new LAppLive2DManager(jsonPath);
+      s_instance = new LAppLive2DManager();
     }
 
     return s_instance;
@@ -126,8 +131,8 @@ export class LAppLive2DManager {
   /**
    * コンストラクタ
    */
-  constructor(jsonPath) {
-    const modelSettingPath: string = jsonPath;
+  constructor() {
+    const modelSettingPath: string = _jsonPath;
     const modelHomeDir = modelSettingPath.substring(
       0,
       modelSettingPath.lastIndexOf("/") + 1

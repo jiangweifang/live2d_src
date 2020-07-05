@@ -17,7 +17,7 @@ import { LAppLive2DManager } from "./lapplive2dmanager";
 import * as LAppDefine from "./lappdefine";
 
 //import { config } from "./config/configMgr";
-import { L2Dwidget } from "./index";
+//import { L2Dwidget } from "./index";
 
 export let canvas: HTMLCanvasElement = null;
 export let s_instance: LAppDelegate = null;

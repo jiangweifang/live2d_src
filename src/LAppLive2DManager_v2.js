@@ -1,7 +1,7 @@
 import { Live2DFramework } from "./lib/Live2DFramework"
 import PlatformManager from "./PlatformManager"
 import LAppModel from "./LAppModel_v2"
-import LAppDefine from "./LAppDefine_v2"
+import * as LAppDefine from "./lappdefine"
 
 export default function LAppLive2DManager() {
   // console.log("--> LAppLive2DManager()");
@@ -81,60 +81,60 @@ LAppLive2DManager.prototype.setDrag = function (x, y) {
 
 
 LAppLive2DManager.prototype.maxScaleEvent = function () {
-  if (LAppDefine.DEBUG_LOG)
+  if (LAppDefine.DebugLogEnable)
     console.log("Max scale event.");
   for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_PINCH_IN,
-      LAppDefine.PRIORITY_NORMAL);
+    this.models[i].startRandomMotion(LAppDefine.MotionGroupPinchIn,
+      LAppDefine.PriorityNormal);
   }
 }
 
 
 
 LAppLive2DManager.prototype.minScaleEvent = function () {
-  if (LAppDefine.DEBUG_LOG)
+  if (LAppDefine.DebugLogEnable)
     console.log("Min scale event.");
   for (var i = 0; i < this.models.length; i++) {
-    this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_PINCH_OUT,
-      LAppDefine.PRIORITY_NORMAL);
+    this.models[i].startRandomMotion(LAppDefine.MotionGroupPinchOut,
+      LAppDefine.PriorityNormal);
   }
 }
 
 
 
 LAppLive2DManager.prototype.tapEvent = function (x, y) {
-  if (LAppDefine.DEBUG_LOG)
+  if (LAppDefine.DebugLogEnable)
     console.log("tapEvent view x:" + x + " y:" + y);
 
   for (var i = 0; i < this.models.length; i++) {
 
-    if (this.models[i].hitTest(LAppDefine.HIT_AREA_HEAD, x, y)) {
+    if (this.models[i].hitTest(LAppDefine.HitAreaNameHead, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
+      if (LAppDefine.DebugLogEnable)
         console.log("Tap face.");
 
       this.models[i].setRandomExpression();
-    }else if (this.models[i].hitTest(LAppDefine.HIT_AREA_BODY, x, y)) {
+    }else if (this.models[i].hitTest(LAppDefine.HitAreaNameBody, x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
+      if (LAppDefine.DebugLogEnable)
         console.log("Tap body." + " models[" + i + "]");
 
-      this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_BODY,
-        LAppDefine.PRIORITY_NORMAL);
+      this.models[i].startRandomMotion(LAppDefine.MotionGroupTapBody,
+        LAppDefine.PriorityNormal);
     }else if (this.models[i].hitTestCustom('head', x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
+      if (LAppDefine.DebugLogEnable)
         console.log("Tap face.");
 
-        this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_FLICK_HEAD,
-          LAppDefine.PRIORITY_NORMAL);
+        this.models[i].startRandomMotion(LAppDefine.MotionGroupFlickHead,
+          LAppDefine.PriorityNormal);
     }else if (this.models[i].hitTestCustom('body', x, y)) {
 
-      if (LAppDefine.DEBUG_LOG)
+      if (LAppDefine.DebugLogEnable)
         console.log("Tap body." + " models[" + i + "]");
 
-        this.models[i].startRandomMotion(LAppDefine.MOTION_GROUP_TAP_BODY,
-          LAppDefine.PRIORITY_NORMAL);
+        this.models[i].startRandomMotion(LAppDefine.MotionGroupTapBody,
+          LAppDefine.PriorityNormal);
     }
   }
 

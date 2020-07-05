@@ -2,9 +2,9 @@ import "./lib/live2d.min";
 
 import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
 
-import LAppLive2DManager from "./LAppLive2DManager_v2"
+import LAppLive2DManager from "./LAppLive2DManager_v2.js"
 
-import LAppDefine from "./LAppDefine_v2"
+import * as LAppDefine from "./lappdefine"
 
 import MatrixStack from "./lib/MatrixStack"
 
@@ -74,8 +74,8 @@ function initv2(modelurl) {
   dragMgr = new L2DTargetPoint();
 
   let ratio = height / width;
-  let left = LAppDefine.VIEW_LOGICAL_LEFT;
-  let right = LAppDefine.VIEW_LOGICAL_RIGHT;
+  let left = LAppDefine.ViewLogicalLeft;
+  let right = LAppDefine.ViewLogicalRight;
   let bottom = -ratio;
   let top = ratio;
 
@@ -86,13 +86,13 @@ function initv2(modelurl) {
 
   viewMatrix.setScreenRect(left, right, bottom, top);
 
-  viewMatrix.setMaxScreenRect(LAppDefine.VIEW_LOGICAL_MAX_LEFT,
-    LAppDefine.VIEW_LOGICAL_MAX_RIGHT,
-    LAppDefine.VIEW_LOGICAL_MAX_BOTTOM,
-    LAppDefine.VIEW_LOGICAL_MAX_TOP);
+  viewMatrix.setMaxScreenRect(LAppDefine.ViewLogicalMaxLeft,
+    LAppDefine.ViewLogicalMaxRight,
+    LAppDefine.ViewLogicalMaxBottom,
+    LAppDefine.ViewLogicalMaxTop);
 
-  viewMatrix.setMaxScale(LAppDefine.VIEW_MAX_SCALE);
-  viewMatrix.setMinScale(LAppDefine.VIEW_MIN_SCALE);
+  viewMatrix.setMaxScale(LAppDefine.ViewMaxScale);
+  viewMatrix.setMinScale(LAppDefine.ViewMinScale);
 
   projMatrix = new L2DMatrix44();
   projMatrix.multScale(1, (width / height));
@@ -101,7 +101,7 @@ function initv2(modelurl) {
   deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
   deviceToScreen.multScale(2 / width, -2 / width);
 
-  gl = LAppDelegate.getWebGLContext();
+  gl = getWebGLContext();
   setContext(gl);
   if (!gl) {
     console.error("Failed to create WebGL context.");
@@ -319,7 +319,7 @@ function modelTurnHead(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (LAppDefine.DebugTouchLogEnable)
         console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
@@ -348,7 +348,7 @@ function modelTapEvent(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (LAppDefine.DebugTouchLogEnable)
         console.log("onMouseDown device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     lastMouseX = sx;
@@ -375,7 +375,7 @@ function followPointer(event)
     let vx = transformViewX(target.x - rect.left);
     let vy = transformViewY(target.y - rect.top);
 
-    if (LAppDefine.DEBUG_MOUSE_LOG)
+    if (LAppDefine.DebugTouchLogEnable)
         console.log("onMouseMove device( x:" + event.clientX + " y:" + event.clientY + " ) view( x:" + vx + " y:" + vy + ")");
 
     if (drag)
@@ -397,7 +397,7 @@ function lookFront()
 
 function sleepy()
 {
-    if (LAppDefine.DEBUG_LOG)
+    if (LAppDefine.DebugLogEnable)
         console.log("Set Session Storage.");
     
     sessionStorage.setItem('Sleepy', '1');
@@ -428,7 +428,7 @@ function mouseEvent(e)
         if("button" in e && e.button != 0) return;
         // lookFront();
     } else if (e.type == "mouseout") {
-        if (LAppDefine.DEBUG_LOG)
+        if (LAppDefine.DebugLogEnable)
             console.log("Mouse out Window.");
         lookFront();
         var SleepyTimer = sessionStorage.getItem('SleepyTimer');

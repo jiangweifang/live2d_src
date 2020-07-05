@@ -1,6 +1,6 @@
 import {Live2DFramework, L2DBaseModel, L2DEyeBlink} from "./lib/Live2DFramework"
 import ModelSettingJson from "./lib/ModelSettingJson"
-import LAppDefine from "./LAppDefine_v2"
+import * as LAppDefine from "./lappdefine"
 import MatrixStack from "./lib/MatrixStack"
 
 //============================================================
@@ -141,13 +141,13 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
                         {
                             var hit_areas_custom = thisRef.modelSetting.getHitAreasCustom();
                             if (hit_areas_custom["head_x"] != null)
-                                LAppDefine.hit_areas_custom_head_x = hit_areas_custom["head_x"];
+                                LAppDefine.HitAreasCustomHead_x = hit_areas_custom["head_x"];
                             if (hit_areas_custom["head_y"] != null)
-                                LAppDefine.hit_areas_custom_head_y = hit_areas_custom["head_y"];
+                                LAppDefine.HitAreasCustomHead_y = hit_areas_custom["head_y"];
                             if (hit_areas_custom["body_x"] != null)
-                                LAppDefine.hit_areas_custom_body_x = hit_areas_custom["body_x"];
+                                LAppDefine.HitAreasCustomBody_x = hit_areas_custom["body_x"];
                             if (hit_areas_custom["body_y"] != null)
-                                LAppDefine.hit_areas_custom_body_y = hit_areas_custom["body_y"];
+                                LAppDefine.HitAreasCustomBody_y = hit_areas_custom["body_y"];
                 }
                         
                         for (var j = 0; j < thisRef.modelSetting.getInitParamNum(); j++)
@@ -174,8 +174,8 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
                         // thisRef.live2DModel.setGL(gl);
                         
                         
-                        thisRef.preloadMotionGroup(LAppDefine.MOTION_GROUP_IDLE);
-                        thisRef.preloadMotionGroup(LAppDefine.MOTION_GROUP_SLEEPY);
+                        thisRef.preloadMotionGroup(LAppDefine.MotionGroupIdle);
+                        thisRef.preloadMotionGroup(LAppDefine.MotionGroupSleepy);
                         thisRef.mainMotionManager.stopAllMotions();
 
                         thisRef.setUpdating(false); 
@@ -224,7 +224,7 @@ LAppModel.prototype.update = function()
 
     if(this.live2DModel == null) 
     {
-        if (LAppDefine.DEBUG_LOG) console.error("Failed to update.");
+        if (LAppDefine.DebugLogEnable) console.error("Failed to update.");
         
         return;
     }
@@ -238,9 +238,9 @@ LAppModel.prototype.update = function()
     {
         var Sleepy = sessionStorage.getItem('Sleepy');
         if(Sleepy === '1') {
-            this.startRandomMotion(LAppDefine.MOTION_GROUP_SLEEPY, LAppDefine.PRIORITY_SLEEPY);
+            this.startRandomMotion(LAppDefine.MotionGroupSleepy, LAppDefine.PrioritySleepy);
         }else {
-            this.startRandomMotion(LAppDefine.MOTION_GROUP_IDLE, LAppDefine.PRIORITY_IDLE);
+            this.startRandomMotion(LAppDefine.MotionGroupIdle, LAppDefine.PriorityIdle);
         }
     }
     
@@ -355,18 +355,18 @@ LAppModel.prototype.startMotion = function(name, no, priority)
     
     if (motionName == null || motionName == "")
     {
-        if (LAppDefine.DEBUG_LOG)
+        if (LAppDefine.DebugLogEnable)
             console.error("Failed to motion.");
         return;
     }
 
-    if (priority == LAppDefine.PRIORITY_FORCE) 
+    if (priority == LAppDefine.PriorityForce) 
     {
         this.mainMotionManager.setReservePriority(priority);
     }
     else if (!this.mainMotionManager.reserveMotion(priority))
     {
-        if (LAppDefine.DEBUG_LOG)
+        if (LAppDefine.DebugLogEnable)
             console.log("Motion is running.")
         return;
     }
@@ -402,7 +402,7 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
     motion.setFadeOut(this.modelSetting.getMotionFadeOut(name, no));
     
     
-    if (LAppDefine.DEBUG_LOG)
+    if (LAppDefine.DebugLogEnable)
             console.log("Start motion : " + motionName);
 
     if (this.modelSetting.getMotionSound(name, no) == null)
@@ -417,7 +417,7 @@ LAppModel.prototype.setFadeInFadeOut = function(name, no, priority, motion)
         var snd = document.createElement("audio");
         snd.src = this.modelHomeDir + soundName;
         
-        if (LAppDefine.DEBUG_LOG)
+        if (LAppDefine.DebugLogEnable)
             console.log("Start sound : " + soundName);
         
         snd.play();
@@ -431,7 +431,7 @@ LAppModel.prototype.setExpression = function(name)
 {
     var motion = this.expressions[name];
     
-    if (LAppDefine.DEBUG_LOG)
+    if (LAppDefine.DebugLogEnable)
         console.log("Expression : " + name);
         
     this.expressionManager.startMotion(motion, false);
@@ -480,9 +480,9 @@ LAppModel.prototype.hitTest = function(id, testX, testY)
 LAppModel.prototype.hitTestCustom = function(type, testX, testY)
 {
     if (type == 'head'){
-        return this.hitTestSimpleCustom(LAppDefine.hit_areas_custom_head_x, LAppDefine.hit_areas_custom_head_y, testX, testY);
+        return this.hitTestSimpleCustom(LAppDefine.HitAreasCustomHead_x, LAppDefine.HitAreasCustomHead_y, testX, testY);
     }else if (type == 'body'){
-        return this.hitTestSimpleCustom(LAppDefine.hit_areas_custom_body_x, LAppDefine.hit_areas_custom_body_y, testX, testY);
+        return this.hitTestSimpleCustom(LAppDefine.HitAreasCustomBody_x, LAppDefine.HitAreasCustomBody_y, testX, testY);
     }else{
         return false; 
     }

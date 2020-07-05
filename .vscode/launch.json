@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "pwa-chrome",
             "request": "launch",
             "name": "启动一个独立的 Chrome",
             "url": "http://localhost:8080",
