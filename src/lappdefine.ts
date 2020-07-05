@@ -39,9 +39,6 @@ export const MotionGroupShake = "shake";
 export const HitAreaNameHead = 'Head';
 export const HitAreaNameBody = 'Body';
 
-
-
-
 // モーションの優先度定数
 export const PriorityNone = 0;
 export const PriorityIdle = 1;
@@ -58,13 +55,19 @@ export const DebugDrawAlphaModel = false;
 // Frameworkから出力するログのレベル設定
 export const CubismLoggingLevel: LogLevel = LogLevel.LogLevel_Verbose;
 
+/**
+ * 
+ * get set
+ * 将webglContext移动到常量类中合并为TypeScript
+ * 
+ */
 
-var context = undefined;
+let context = undefined;
 
-var _HitAreasCustomHead_x ='';
-var _HitAreasCustomHead_y ='';
-var _HitAreasCustomBody_x ='';
-var _HitAreasCustomBody_y ='';
+let _HitAreasCustomHead_x =undefined;
+let _HitAreasCustomHead_y =undefined;
+let _HitAreasCustomBody_x =undefined;
+let _HitAreasCustomBody_y =undefined;
 
 export function setContext(webglContext) {
   context = webglContext;
