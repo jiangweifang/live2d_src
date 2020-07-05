@@ -5,7 +5,7 @@
  *
  *  (c) Live2D Inc. All rights reserved.
  */
-import {getContext} from "./webglcontext"
+import {getContext} from "./lappdefine"
 
 //============================================================
 //============================================================

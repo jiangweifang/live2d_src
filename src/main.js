@@ -8,7 +8,7 @@ import * as LAppDefine from "./lappdefine"
 
 import MatrixStack from "./lib/MatrixStack"
 
-import {setContext} from "./webglcontext"
+
 
 //这里引入3.0进行试验
 import LAppDelegate from  "./lappdelegate"
@@ -102,7 +102,7 @@ function initv2(modelurl) {
   deviceToScreen.multScale(2 / width, -2 / width);
 
   gl = getWebGLContext();
-  setContext(gl);
+  LAppDefine.setContext(gl);
   if (!gl) {
     console.error("Failed to create WebGL context.");
     if(!!window.WebGLRenderingContext){

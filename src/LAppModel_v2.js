@@ -3,6 +3,8 @@ import ModelSettingJson from "./lib/ModelSettingJson"
 import * as LAppDefine from "./lappdefine"
 import MatrixStack from "./lib/MatrixStack"
 
+
+
 //============================================================
 //============================================================
 //  class LAppModel     extends L2DBaseModel         
@@ -141,13 +143,13 @@ LAppModel.prototype.load = function(gl, modelSettingPath, callback)
                         {
                             var hit_areas_custom = thisRef.modelSetting.getHitAreasCustom();
                             if (hit_areas_custom["head_x"] != null)
-                                LAppDefine.HitAreasCustomHead_x = hit_areas_custom["head_x"];
+                                LAppDefine.setHitAreasCustomHead_x(hit_areas_custom["head_x"]);
                             if (hit_areas_custom["head_y"] != null)
-                                LAppDefine.HitAreasCustomHead_y = hit_areas_custom["head_y"];
+                                LAppDefine.setHitAreasCustomHead_y(hit_areas_custom["head_y"]);
                             if (hit_areas_custom["body_x"] != null)
-                                LAppDefine.HitAreasCustomBody_x = hit_areas_custom["body_x"];
+                                LAppDefine.setHitAreasCustomBody_x(hit_areas_custom["body_x"]) ;
                             if (hit_areas_custom["body_y"] != null)
-                                LAppDefine.HitAreasCustomBody_y = hit_areas_custom["body_y"];
+                                LAppDefine.setHitAreasCustomBody_y(hit_areas_custom["body_y"]) ;
                 }
                         
                         for (var j = 0; j < thisRef.modelSetting.getInitParamNum(); j++)
@@ -480,9 +482,9 @@ LAppModel.prototype.hitTest = function(id, testX, testY)
 LAppModel.prototype.hitTestCustom = function(type, testX, testY)
 {
     if (type == 'head'){
-        return this.hitTestSimpleCustom(LAppDefine.HitAreasCustomHead_x, LAppDefine.HitAreasCustomHead_y, testX, testY);
+        return this.hitTestSimpleCustom(LAppDefine.getHitAreasCustomHead_x(), LAppDefine.getHitAreasCustomHead_y(), testX, testY);
     }else if (type == 'body'){
-        return this.hitTestSimpleCustom(LAppDefine.HitAreasCustomBody_x, LAppDefine.HitAreasCustomBody_y, testX, testY);
+        return this.hitTestSimpleCustom(LAppDefine.getHitAreasCustomBody_x(), LAppDefine.getHitAreasCustomBody_y(), testX, testY);
     }else{
         return false; 
     }

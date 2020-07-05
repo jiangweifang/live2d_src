@@ -22,6 +22,11 @@ export let s_instance: LAppLive2DManager = null;
 
 let _jsonPath = '';
 
+// v2的全局声明
+let models = [];
+let count = -1;
+let reloadFlg = false;
+
 /**
  * サンプルアプリケーションにおいてCubismModelを管理するクラス
  * モデル生成と破棄、タップイベントの処理、モデル切り替えを行う。
@@ -153,4 +158,18 @@ export class LAppLive2DManager {
     LAppPal.printMessage("Motion Finished:");
     console.log(self);
   };
+
+
+
+
+
+  
+  /**
+   * 在这里移植v2版本Manager
+   */
+  public createModel(){
+    var model = new LAppModel();
+    models.push(model);
+    return model;
+  }
 }

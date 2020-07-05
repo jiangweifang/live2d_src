@@ -39,10 +39,7 @@ export const MotionGroupShake = "shake";
 export const HitAreaNameHead = 'Head';
 export const HitAreaNameBody = 'Body';
 
-export let HitAreasCustomHead_x ='';
-export let HitAreasCustomHead_y ='';
-export let HitAreasCustomBody_x ='';
-export let HitAreasCustomBody_y ='';
+
 
 
 // モーションの優先度定数
@@ -61,3 +58,50 @@ export const DebugDrawAlphaModel = false;
 // Frameworkから出力するログのレベル設定
 export const CubismLoggingLevel: LogLevel = LogLevel.LogLevel_Verbose;
 
+
+var context = undefined;
+
+var _HitAreasCustomHead_x ='';
+var _HitAreasCustomHead_y ='';
+var _HitAreasCustomBody_x ='';
+var _HitAreasCustomBody_y ='';
+
+export function setContext(webglContext) {
+  context = webglContext;
+}
+
+export function getContext() {
+  return context;
+}
+
+export function setHitAreasCustomHead_x(HitAreasCustomHead_x) {
+    _HitAreasCustomHead_x = HitAreasCustomHead_x;
+  }
+  
+  export function getHitAreasCustomHead_x() {
+    return _HitAreasCustomHead_x;
+  }
+  
+  export function setHitAreasCustomHead_y(HitAreasCustomHead_y) {
+    _HitAreasCustomHead_y = HitAreasCustomHead_y;
+  }
+  
+  export function getHitAreasCustomHead_y() {
+    return _HitAreasCustomHead_y;
+  }
+
+  export function setHitAreasCustomBody_x(HitAreasCustomBody_x) {
+    _HitAreasCustomBody_x = HitAreasCustomBody_x;
+  }
+  
+  export function getHitAreasCustomBody_x() {
+    return _HitAreasCustomBody_x;
+  }
+  
+  export function setHitAreasCustomBody_y(HitAreasCustomBody_y) {
+    _HitAreasCustomBody_y = HitAreasCustomBody_y;
+  }
+  
+  export function getHitAreasCustomBody_y() {
+    return _HitAreasCustomBody_y;
+  }
