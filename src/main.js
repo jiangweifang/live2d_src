@@ -10,8 +10,10 @@ import MatrixStack from "./lib/MatrixStack"
 
 
 
+
+
 //这里引入3.0进行试验
-import LAppDelegate from  "./lappdelegate"
+import { LAppDelegate} from  "./lappdelegate"
 
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
@@ -117,7 +119,11 @@ function initv2(modelurl) {
 }
 
 function initv3(modelurl){
-    
+    var _path = './model/biaoqiang/biaoqiang.model3.json';
+    if(!LAppDelegate.getInstance(_path).initialize()){
+        return;
+    }
+    LAppDelegate.getInstance(_path).run();
 }
 
 function startDraw() {
@@ -490,7 +496,7 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id,modelurl,headPos,ver = 2) {
+function loadlive2d(id,modelurl,headPos ,ver =3 ) {
     head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
     initL2dCanvas(id);
     if(ver<3){
