@@ -10,7 +10,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "crypto-js": "^4.0.0",
-    "dtsmake": "0.0.10"
+    "dtsmake": "0.0.10",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.6",
+    "whatwg-fetch": "^3.1.0"
   }
 }

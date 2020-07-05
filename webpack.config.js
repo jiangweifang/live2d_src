@@ -10,7 +10,7 @@ module.exports = {
   },
   
   resolve: {
-    extensions: ['.json', '.js', '.jsx']
+    extensions: ['.json', '.js', '.ts']
   },
   devtool: 'source-map',
   devServer: {
@@ -18,8 +18,32 @@ module.exports = {
     inline: true,
     host: 'localhost',
     port: 8080,
-    open:true,
     hot:true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: path.resolve(__dirname, "src"),
+        use: [{
+          loader: 'babel-loader',
+        }],
+      },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader',
+          options: {
+            minimize: true,
+          },
+        }],
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        loader: 'ts-loader'
+      }
+    ]
   },
   mode:'production'
 };

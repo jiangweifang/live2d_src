@@ -2,13 +2,16 @@ import "./lib/live2d.min";
 
 import { L2DTargetPoint, L2DViewMatrix, L2DMatrix44 } from "./lib/Live2DFramework";
 
-import LAppLive2DManager from "./LAppLive2DManager"
+import LAppLive2DManager from "./LAppLive2DManager_v2"
 
-import LAppDefine from "./LAppDefine"
+import LAppDefine from "./LAppDefine_v2"
 
 import MatrixStack from "./lib/MatrixStack"
 
 import {setContext} from "./webglcontext"
+
+//这里引入3.0进行试验
+import LAppDelegate from  "./lappdelegate"
 
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
@@ -47,6 +50,7 @@ let modelurl = "";
 
 let head_pos = 0.5;
 
+
 function initL2dCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
   if (canvas.addEventListener) {
@@ -63,7 +67,7 @@ function initL2dCanvas(canvasId) {
   }
 }
 
-function init(modelurl) {
+function initv2(modelurl) {
   let width = canvas.width;
   let height = canvas.height;
 
@@ -97,7 +101,7 @@ function init(modelurl) {
   deviceToScreen.multTranslate(-width / 2.0, -height / 2.0);
   deviceToScreen.multScale(2 / width, -2 / width);
 
-  gl = getWebGLContext();
+  gl = LAppDelegate.getWebGLContext();
   setContext(gl);
   if (!gl) {
     console.error("Failed to create WebGL context.");
@@ -110,6 +114,10 @@ function init(modelurl) {
   gl.clearColor(0.0, 0.0, 0.0, 0.0);
   changeModel(modelurl);
   startDraw();
+}
+
+function initv3(modelurl){
+    
 }
 
 function startDraw() {
@@ -482,10 +490,14 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id,modelurl,headPos) {
+function loadlive2d(id,modelurl,headPos,ver = 2) {
     head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
     initL2dCanvas(id);
-    init(modelurl);
+    if(ver<3){
+        initv2(modelurl);
+    }else{
+        initv3(modelurl);
+    }
 }
 
 window.loadlive2d = loadlive2d;
