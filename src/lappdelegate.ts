@@ -24,6 +24,8 @@ export let s_instance: LAppDelegate = null;
 export let gl: WebGLRenderingContext = null;
 export let frameBuffer: WebGLFramebuffer = null;
 
+export let _jsonPath: String = null;
+
 /**
  * アプリケーションクラス。
  * Cubism SDKの管理を行う。
@@ -58,7 +60,9 @@ export class LAppDelegate {
    * APPに必要な物を初期化する。
    * 在这里指定不合理，没有外部条件导致高内聚
    */
-  public initialize(): boolean {
+  public initialize(jsonPath,canvasObj): boolean {
+    canvas = canvasObj;
+    _jsonPath = jsonPath
     /*
     let e = document.getElementById(config.name.div);
     if (e !== null) {
@@ -106,9 +110,10 @@ export class LAppDelegate {
     newElem.appendChild(canvas);
     L2Dwidget.emit("create-canvas", canvas);
     */
+   
 
     // @ts-ignore
-    gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    gl =  getWebGLContext(canvas);
 
     if (!gl) {
       alert("Cannot initialize WebGL. This browser does not support.");
@@ -475,7 +480,7 @@ function onMouseLeave(e: TouchEvent): void {
   LAppDelegate.getInstance()._view.onTouchesEnded(0, 0);
 }
 
-function getWebGLContext()
+function getWebGLContext(canvas)
 {
     var NAMES = [ "webgl" , "experimental-webgl" , "webkit-3d" , "moz-webgl"];
     for( var i = 0; i < NAMES.length; i++ ){

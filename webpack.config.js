@@ -25,7 +25,7 @@ module.exports = {
   target: 'web',
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, '/dist/'),
+    contentBase: path.join(__dirname, '/'),
     inline: true,
     host: 'localhost',
     port: 8080,
