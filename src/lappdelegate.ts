@@ -58,59 +58,13 @@ export class LAppDelegate {
 
   /**
    * APPに必要な物を初期化する。
-   * 在这里指定不合理，没有外部条件导致高内聚
+   * 方法入口，这里是调用Live2D的初始化
    */
-  public initialize(jsonPath,canvasObj): boolean {
-    canvas = canvasObj;
+  public initialize(jsonPath): boolean {
+    
+    
     _jsonPath = jsonPath
-    /*
-    let e = document.getElementById(config.name.div);
-    if (e !== null) {
-      document.body.removeChild(e);
-    }
-
-    let newElem = document.createElement("div");
-    newElem.id = config.name.div;
-    newElem.className = "live2d-widget-container";
-    newElem.style.setProperty("position", "fixed");
-    newElem.style.setProperty(
-      config.display.position,
-      config.display.hOffset + "px"
-    );
-    newElem.style.setProperty("bottom", config.display.vOffset + "px");
-    newElem.style.setProperty("width", config.display.width + "px");
-    newElem.style.setProperty("height", config.display.height + "px");
-    newElem.style.setProperty("z-index", "99999");
-    newElem.style.setProperty("opacity", config.react.opacity);
-    newElem.style.setProperty("pointer-events", "none");
-    document.body.appendChild(newElem);
-    L2Dwidget.emit("create-container", newElem);
-
-
-    canvas = document.createElement("canvas");
-    canvas.setAttribute("id", config.name.canvas);
-    canvas.setAttribute(
-      "width",
-      (config.display.width * config.display.superSample).toString()
-    );
-    canvas.setAttribute(
-      "height",
-      (config.display.height * config.display.superSample).toString()
-    );
-    canvas.style.setProperty("position", "absolute");
-    canvas.style.setProperty("left", "0px");
-    canvas.style.setProperty("top", "0px");
-    canvas.style.setProperty("width", config.display.width + "px");
-    canvas.style.setProperty("height", config.display.height + "px");
-    if (config.dev.border)
-      canvas.style.setProperty("border", "dashed 1px #CCC");
-    canvas.width = config.display.width;
-    canvas.height = config.display.height;
-
-    newElem.appendChild(canvas);
-    L2Dwidget.emit("create-canvas", canvas);
-    */
-   
+    
 
     // @ts-ignore
     gl =  getWebGLContext(canvas);
@@ -134,17 +88,7 @@ export class LAppDelegate {
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-    const supportTouch: boolean = "ontouchend" in canvas;
-
-    // window.addEventListener("click", mouseEvent);
-    window.addEventListener("mousedown", onClickBegan);
-    window.addEventListener("mousemove", onMouseMoved);
-    window.addEventListener("mouseup", onClickEnded);
-    document.addEventListener("mouseleave", onMouseLeave);
-    window.addEventListener("touchstart", onTouchBegan);
-    window.addEventListener("touchend", onTouchEnded);
-    window.addEventListener("touchmove", onTouchMoved);
-    window.addEventListener("touchcancel", onTouchCancel);
+    
     // if (supportTouch) {
     //   // タッチ関連コールバック関数登録
     //   canvas.ontouchstart = onTouchBegan;
@@ -326,11 +270,27 @@ export class LAppDelegate {
 
     // load model
     //这里要传递jsonPath
-    LAppLive2DManager.getInstance('');
+    LAppLive2DManager.getInstance(_jsonPath);
 
     LAppPal.updateTime();
 
     this._view.initializeSprite();
+  }
+
+  public initL2dCanvas(canvasId) {
+    canvas =  document.getElementById(canvasId) as HTMLCanvasElement;
+    const supportTouch: boolean = "ontouchend" in canvas;
+    if (canvas.addEventListener) {
+      // window.addEventListener("click", mouseEvent);
+      window.addEventListener("mousedown", onClickBegan);
+      window.addEventListener("mousemove", onMouseMoved);
+      window.addEventListener("mouseup", onClickEnded);
+      document.addEventListener("mouseleave", onMouseLeave);
+      window.addEventListener("touchstart", onTouchBegan);
+      window.addEventListener("touchend", onTouchEnded);
+      window.addEventListener("touchmove", onTouchMoved);
+      window.addEventListener("touchcancel", onTouchCancel);
+    }
   }
 
   _cubismOption: Csm_Option; // Cubism SDK Option
@@ -343,6 +303,8 @@ export class LAppDelegate {
 }
 
 /**
+ * -----------------------------鼠标事件开始----------------------
+ * 
  * クリックしたときに呼ばれる。
  */
 function onClickBegan(e: MouseEvent): void {
@@ -480,6 +442,10 @@ function onMouseLeave(e: TouchEvent): void {
   LAppDelegate.getInstance()._view.onTouchesEnded(0, 0);
 }
 
+/**
+ * WebGLContext渲染器
+ * @param canvas 获得一个canvas对象
+ */
 function getWebGLContext(canvas)
 {
     var NAMES = [ "webgl" , "experimental-webgl" , "webkit-3d" , "moz-webgl"];
@@ -491,4 +457,7 @@ function getWebGLContext(canvas)
         catch(e){}
     }
     return null;
-};
+}
+
+
+

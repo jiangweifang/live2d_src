@@ -9,7 +9,7 @@ module.exports = {
   },
   entry: [
     'core-js/fn/promise',
-    path.join(__dirname, 'src', 'main')
+    path.join(__dirname, 'src', 'main'),
   ],
   watch: true,
   output: {
@@ -63,26 +63,6 @@ module.exports = {
       parallel:true,
       terserOptions:{warnings:false,mangle: true},
     })],
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 6,
-      maxInitialRequests: 4,
-      automaticNameDelimiter: '~',
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
   },
   plugins: [
     new manifestPlugin(),

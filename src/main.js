@@ -8,8 +8,7 @@ import * as LAppDefine from "./lappdefine"
 
 import MatrixStack from "./lib/MatrixStack"
 
-//这里引入3.0进行试验
-import { LAppDelegate} from  "./lappdelegate"
+import {LAppDelegate} from './lappdelegate'
 
 // window.onerror = function (msg, url, line, col, error) {
 //   let errmsg = "file:" + url + "<br>line:" + line + " " + msg;
@@ -48,7 +47,10 @@ let modelurl = "";
 
 let head_pos = 0.5;
 
-
+/**
+ * 这是V2版本的处理 V3版本在lappdelegate.ts中进行
+ * @param {*} canvasId 
+ */
 function initL2dCanvas(canvasId) {
   canvas = document.getElementById(canvasId);
   if (canvas.addEventListener) {
@@ -114,13 +116,7 @@ function initv2(modelurl) {
   startDraw();
 }
 
-function initv3(modelurl){
-    var _path = './model/biaoqiang/biaoqiang.model3.json';
-    if(!LAppDelegate.getInstance().initialize(_path,canvas)){
-        return;
-    }
-    LAppDelegate.getInstance().run();
-}
+
 
 function startDraw() {
   if (!isDrawStart) {
@@ -492,14 +488,20 @@ function getWebGLContext()
     return null;
 };
 
-function loadlive2d(id,modelurl,headPos ,ver =3 ) {
+function loadlive2d(id,modelurl,headPos) {
     head_pos = typeof headPos === 'undefined' ? 0.5 : headPos;
-    if(ver<3){
-        initL2dCanvas(id);
-        initv2(modelurl);
-    }else{
-        initv3(modelurl);
-    }
+    initL2dCanvas(id);
+    initv2(modelurl);
 }
 
+export function loadlive2dv3(id,modelurl){
+    modelurl = './model/biaoqiang/biaoqiang.model3.json';
+    LAppDelegate.getInstance().initL2dCanvas(id);
+    if(!LAppDelegate.getInstance().initialize(modelurl)){
+      return;
+    }
+    LAppDelegate.getInstance().run();
+  }
+
 window.loadlive2d = loadlive2d;
+window.loadlive2dv3 = loadlive2dv3;
