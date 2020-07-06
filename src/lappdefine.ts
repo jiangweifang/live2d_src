@@ -69,6 +69,8 @@ let _HitAreasCustomHead_y =undefined;
 let _HitAreasCustomBody_x =undefined;
 let _HitAreasCustomBody_y =undefined;
 
+let _jsonPath :string = '';
+
 export function setContext(webglContext) {
   context = webglContext;
 }
@@ -107,4 +109,12 @@ export function setHitAreasCustomHead_x(HitAreasCustomHead_x) {
   
   export function getHitAreasCustomBody_y() {
     return _HitAreasCustomBody_y;
+  }
+
+  export function setJsonPath(jsonPath){
+    _jsonPath = jsonPath;
+  }
+  
+  export function getJsonPath():string{
+    return _jsonPath;
   }

@@ -1,13 +1,20 @@
 # live2d_src
-基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版
+- wp_live2D 兼容2.0和3.0版本JS源文件，使用es6编译TypeScript 
+- 基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版
+- 理解[wzekin/live2d-widget.js](https://github.com/wzekin/live2d-widget.js) 后编译
 
-我在理解[wzekin/live2d-widget.js](https://github.com/wzekin/live2d-widget.js) 的内容，代码内聚有点高，功能需要简化并更纯粹一些才可以使用
+遗留问题：
+1. JavaScript文件太大 
+2. 没有处理v3版本自适应Canvas的高度
+3. 代码将会继续优化
 
 记录编译方法：
 
-1. 使用VS CODE打开后会有推荐安装的插件，请尽量安装
+1. 使用VS CODE打开后会有推荐安装的插件，请尽量安装  
 
-2. 还需安装node.js后使用npm命令：
+2. 还需安装node.js后使用npm命令install 将会自动安装`package.json`中的依赖
+
+另外需要：
 
 - Win系统：在PowerShell（非管理员）  
 输入：
@@ -15,12 +22,12 @@
 2. `npm install webpack-cli -g` 
 3. `npm install webpack-dev-server -g`
 可替换：  
--  `-g`是全局安装参数
+-  `-g`是全局安装参数（建议全局安装）
 - `--save-dev`是本项目安装参数
 
 - 编译命令：`webpack --config .\webpack.config.js`
 
-- 调试命令：`webpack-dev-server --config .\webpack.config.js`
+- 调试命令：`webpack-dev-server`
 
 - webpack视频教学：https://www.bilibili.com/video/av31582899/
 

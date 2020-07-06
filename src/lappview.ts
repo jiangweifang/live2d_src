@@ -17,6 +17,7 @@ import { TextureInfo } from "./lapptexturemanager";
 import { LAppPal } from "./lapppal";
 import * as LAppDefine from "./lappdefine";
 
+export let _jsonPath: String = null;
 /**
  * 描画クラス。
  */
@@ -107,8 +108,7 @@ export class LAppView {
     }
 
     gl.flush();
-    // 这里要传递jsonPath
-    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance('');
+    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance();
 
     live2DManager.onUpdate();
   }
@@ -144,8 +144,7 @@ export class LAppView {
     const viewY: number = this.transformViewY(this._touchManager.getY());
 
     this._touchManager.touchesMoved(pointX, pointY);
-    //这里要传递jsonPath
-    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance('');
+    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance();
     live2DManager.onDrag(viewX, viewY);
   }
 
@@ -157,8 +156,7 @@ export class LAppView {
    */
   public onTouchesEnded(pointX: number, pointY: number): void {
     // タッチ終了
-    //这里要传递jsonPath
-    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance('');
+    const live2DManager: LAppLive2DManager = LAppLive2DManager.getInstance();
     live2DManager.onDrag(0.0, 0.0);
 
     {

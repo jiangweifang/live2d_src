@@ -20,7 +20,6 @@ import * as LAppDefine from "./lappdefine";
 
 export let s_instance: LAppLive2DManager = null;
 
-let _jsonPath = '';
 
 // v2的全局声明
 let models = [];
@@ -38,14 +37,10 @@ export class LAppLive2DManager {
    *
    * @return クラスのインスタンス
    */
-  public static getInstance(jsonPath): LAppLive2DManager {
-    if (_jsonPath == ''){
-      _jsonPath = jsonPath;
-    }
+  public static getInstance(): LAppLive2DManager {
     if (s_instance == null) {
       s_instance = new LAppLive2DManager();
     }
-
     return s_instance;
   }
 
@@ -133,11 +128,14 @@ export class LAppLive2DManager {
     model.draw(projection); // 参照渡しなのでprojectionは変質する。
   }
 
+  
+
   /**
    * コンストラクタ
    */
   constructor() {
-    const modelSettingPath: string = _jsonPath;
+    // 从公共Define获取JsonPath 这里可以做一些优化
+    const modelSettingPath: string = LAppDefine.getJsonPath();;
     const modelHomeDir = modelSettingPath.substring(
       0,
       modelSettingPath.lastIndexOf("/") + 1
@@ -158,18 +156,7 @@ export class LAppLive2DManager {
     LAppPal.printMessage("Motion Finished:");
     console.log(self);
   };
-
-
-
-
-
   
-  /**
-   * 在这里移植v2版本Manager
-   */
-  public createModel(){
-    var model = new LAppModel();
-    models.push(model);
-    return model;
-  }
 }
+
+

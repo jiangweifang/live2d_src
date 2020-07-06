@@ -495,7 +495,6 @@ function loadlive2d(id,modelurl,headPos) {
 }
 
 export function loadlive2dv3(id,modelurl){
-    modelurl = './model/biaoqiang/biaoqiang.model3.json';
     LAppDelegate.getInstance().initL2dCanvas(id);
     if(!LAppDelegate.getInstance().initialize(modelurl)){
       return;

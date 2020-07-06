@@ -269,8 +269,10 @@ export class LAppDelegate {
     Csm_CubismFramework.initialize();
 
     // load model
-    //这里要传递jsonPath
-    LAppLive2DManager.getInstance(_jsonPath);
+    //这里要传递jsonPath到公共Define
+    LAppDefine.setJsonPath(_jsonPath);
+    // 在LAppLive2DManager构造的时候会用到jsonPath
+    LAppLive2DManager.getInstance();
 
     LAppPal.updateTime();
 
