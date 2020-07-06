@@ -2,8 +2,9 @@
 - wp_live2D 兼容2.0和3.0版本JS源文件，使用es6编译TypeScript 
 - 基于 [#fea64e4](https://github.com/EYHN/hexo-helper-live2d/commit/fea64e49a760ded5cc2dad974fd3d55bcebe15c6) 的修改版
 - 理解[wzekin/live2d-widget.js](https://github.com/wzekin/live2d-widget.js) 后编译
+- 此项目已归档，最新更新请移步至[live2d_src_v4](https://github.com/jiangweifang/live2d_src_v4)
 
-遗留问题：
+遗留问题：(将会在新项目中进行更新)
 1. JavaScript文件太大 
 2. 没有处理v3版本自适应Canvas的高度
 3. 代码将会继续优化
